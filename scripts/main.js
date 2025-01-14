@@ -58,6 +58,18 @@ function fillPreview() {
     json_output.textContent = generateJSON(true);
 }
 
+async function saveJSONToClipboard() {
+    try {
+        await navigator.clipboard.writeText(generateJSON());
+        copy.textContent = "Copied!";
+        window.setTimeout(() => {
+            copy.textContent = "Copy JSON";
+        }, 1000);
+    } catch (error) {
+        alert(error.message);
+    }
+}
+
 function resize_canvas() {
     context.canvas.width = window.innerWidth * 0.6;
     context.canvas.height = window.innerHeight * 0.6;
@@ -72,6 +84,7 @@ function main() {
             closePolygon();
             fillPreview();
         });
+        copy.addEventListener("click", saveJSONToClipboard);
         window.addEventListener("resize", resize_canvas);
     });
 }
@@ -80,6 +93,8 @@ const canvas = document.getElementById("canvas");
 const context = canvas.getContext("2d");
 const button = document.getElementById("button");
 const json_output = document.getElementById("json_output");
+const copy = document.getElementById("copy");
+
 const points = [];
 const lines = [];
 

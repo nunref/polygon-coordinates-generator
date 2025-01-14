@@ -39,7 +39,11 @@ function generateJSON() {
         (key, value) => {
             console.log(key, value, typeof value);
             if (value instanceof Array) {
-                return JSON.stringify(value);
+                array_str = JSON.stringify(value.slice(0, 2));
+                if (value.length > 2) {
+                    array_str = array_str.slice(0,-1) + ",...]";
+                }
+                return array_str;
             }
             return value;
         }, 

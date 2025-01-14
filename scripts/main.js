@@ -33,15 +33,18 @@ function closePolygon() {
         }
 }
 
-function generateJSON() {
-    json_output.textContent = JSON.stringify(
+function generateJSON(preview = false) {
+    return JSON.stringify(
         {points: points, lines: lines}, 
         (key, value) => {
             console.log(key, value, typeof value);
             if (value instanceof Array) {
-                array_str = JSON.stringify(value.slice(0, 2));
-                if (value.length > 2) {
+                array_str = "";
+                if (preview && value.length > 2) {
+                    array_str = JSON.stringify(value.slice(0, 2));
                     array_str = array_str.slice(0,-1) + ",...]";
+                } else {
+                    array_str = JSON.stringify(value);
                 }
                 return array_str;
             }
@@ -49,6 +52,10 @@ function generateJSON() {
         }, 
         1
     );
+}
+
+function fillPreview() {
+    json_output.textContent = generateJSON(true);
 }
 
 function resize_canvas() {
@@ -59,11 +66,11 @@ function resize_canvas() {
 function main() {
     window.addEventListener("load", () => {
         resize_canvas();
-        generateJSON()
+        fillPreview()
         canvas.addEventListener("click", draw);
         button.addEventListener("click", () => {
             closePolygon();
-            generateJSON();
+            fillPreview();
         });
         window.addEventListener("resize", resize_canvas);
     });

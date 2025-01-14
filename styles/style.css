@@ -19,3 +19,11 @@ button {
     width: 8rem;
 }
 
+div {
+    width: 500px;
+    border: 1px solid black;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+}
+

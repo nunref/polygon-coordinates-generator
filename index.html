@@ -10,9 +10,14 @@
   <body>
     <h1>Draw your polygon</h1>
     <canvas id="canvas"></canvas>
-    <button id="button">Done</button>
-    <div>
-    <pre><code id="json_output"></code></pre>
+    <button class = "done_button" id="button">Done</button>
+
+    <div class = "output_preview">
+        <pre><code id="json_output"></code></pre>
+    </div>
+    <div class = "output_buttons">
+        <button class = "output_button" id="copy">Copy JSON</button>
+        <button class = "output_button" id="download">Download JSON</button>
     </div>
   </body>
 </html>

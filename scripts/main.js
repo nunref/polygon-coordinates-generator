@@ -100,7 +100,7 @@ function main() {
         resize_canvas();
         fillPreview()
         canvas.addEventListener("click", draw);
-        button.addEventListener("click", () => {
+        done.addEventListener("click", () => {
             closePolygon();
             fillPreview();
         });
@@ -113,7 +113,7 @@ function main() {
 
 const canvas = document.getElementById("canvas");
 const context = canvas.getContext("2d");
-const button = document.getElementById("button");
+const done = document.getElementById("done");
 const clear = document.getElementById("clear");
 const json_output = document.getElementById("json_output");
 const copy = document.getElementById("copy");

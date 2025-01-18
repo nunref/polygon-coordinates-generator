@@ -19,6 +19,13 @@ function draw(event) {
     points.push(point);
 }
 
+function clearPolygon() {
+    context.clearRect(0, 0, canvas.width, canvas.height);
+    points = [];
+    lines = [];
+    fillPreview();
+}
+
 function closePolygon() {
         if (points.length > 2) {
             first_point = points[0];
@@ -97,6 +104,7 @@ function main() {
             closePolygon();
             fillPreview();
         });
+        clear.addEventListener("click", clearPolygon);
         copy.addEventListener("click", saveJSONToClipboard);
         download.addEventListener("click", downloadJSON);
         window.addEventListener("resize", resize_canvas);
@@ -106,12 +114,13 @@ function main() {
 const canvas = document.getElementById("canvas");
 const context = canvas.getContext("2d");
 const button = document.getElementById("button");
+const clear = document.getElementById("clear");
 const json_output = document.getElementById("json_output");
 const copy = document.getElementById("copy");
 const download = document.getElementById("download");
 
-const points = [];
-const lines = [];
+let points = [];
+let lines = [];
 
 main()
 

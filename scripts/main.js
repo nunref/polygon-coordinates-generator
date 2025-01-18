@@ -90,14 +90,11 @@ function downloadJSON() {
     URL.revokeObjectURL(blobUrl);
 }
 
-function resize_canvas() {
+function main() {
     context.canvas.width = window.innerWidth * 0.6;
     context.canvas.height = window.innerHeight * 0.6;
-}
 
-function main() {
     window.addEventListener("load", () => {
-        resize_canvas();
         fillPreview()
         canvas.addEventListener("click", draw);
         done.addEventListener("click", () => {
@@ -107,7 +104,6 @@ function main() {
         clear.addEventListener("click", clearPolygon);
         copy.addEventListener("click", saveJSONToClipboard);
         download.addEventListener("click", downloadJSON);
-        window.addEventListener("resize", resize_canvas);
     });
 }
 

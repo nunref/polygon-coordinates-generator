@@ -70,6 +70,19 @@ async function saveJSONToClipboard() {
     }
 }
 
+function downloadJSON() {
+    const blob = new Blob(
+        [generateJSON()],
+        {type: "application/json"}
+    );
+    const blobUrl = URL.createObjectURL(blob);
+    const anchor = document.createElement('a');
+    anchor.href = blobUrl;
+    anchor.download = points.length + "-points-polygon.json";
+    anchor.click();
+    URL.revokeObjectURL(blobUrl);
+}
+
 function resize_canvas() {
     context.canvas.width = window.innerWidth * 0.6;
     context.canvas.height = window.innerHeight * 0.6;
@@ -85,6 +98,7 @@ function main() {
             fillPreview();
         });
         copy.addEventListener("click", saveJSONToClipboard);
+        download.addEventListener("click", downloadJSON);
         window.addEventListener("resize", resize_canvas);
     });
 }
@@ -94,6 +108,7 @@ const context = canvas.getContext("2d");
 const button = document.getElementById("button");
 const json_output = document.getElementById("json_output");
 const copy = document.getElementById("copy");
+const download = document.getElementById("download");
 
 const points = [];
 const lines = [];

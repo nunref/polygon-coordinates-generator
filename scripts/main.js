@@ -95,7 +95,7 @@ function downloadJSON() {
     const blobUrl = URL.createObjectURL(blob);
     const anchor = document.createElement('a');
     anchor.href = blobUrl;
-    anchor.download = points.length + "-points-polygon.json";
+    anchor.download = points.length + "-sides-polygon.json";
     anchor.click();
     URL.revokeObjectURL(blobUrl);
 }

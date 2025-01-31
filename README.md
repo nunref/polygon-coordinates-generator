@@ -19,3 +19,5 @@ Each vertex connects to the previous.
 Once every vertex is defined, clicking the "Done" button will close the polygon and compile a JSON file with all the information.
 Finally, you can copy or download the JSON and start again with the "Clear" button.
 
+**IMPORTANT**: origin is the botton-left corner.
+

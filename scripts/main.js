@@ -12,8 +12,6 @@ function draw(event) {
         context.moveTo(vertex[0], vertex[1]);
         context.lineTo(previous_vertex[0], previous_vertex[1]);
         context.stroke();
-
-        sides.push([[previous_vertex[0], previous_vertex[1]], [vertex[0], vertex[1]]]);
     }
 
     vertices.push(vertex);
@@ -22,7 +20,6 @@ function draw(event) {
 function clearPolygon() {
     context.clearRect(0, 0, canvas.width, canvas.height);
     vertices = [];
-    sides = [];
     fillPreview();
 }
 
@@ -35,12 +32,19 @@ function closePolygon() {
             context.moveTo(first_vertex[0], first_vertex[1]);
             context.lineTo(last_vertex[0], last_vertex[1]);
             context.stroke();
-
-            sides.push([[last_vertex[0], last_vertex[1]], [first_vertex[0], first_vertex[1]]]);
         }
 }
 
 function generateJSON(preview = false) {
+    let sides = [];
+    if (vertices.length > 1) {
+        for (let i = 0; i < vertices.length - 1; i++) {
+            sides.push([[vertices[i][0], vertices[i][1]], [vertices[i+1][0], vertices[i+1][1]]]);
+        }
+        sides.push([[vertices[vertices.length - 1][0], vertices[vertices.length - 1][1]], [vertices[0][0], vertices[0][1]]]);
+    }
+
+
     return JSON.stringify(
         {vertices: vertices, sides: sides}, 
         (key, value) => {
@@ -116,7 +120,6 @@ const copy = document.getElementById("copy");
 const download = document.getElementById("download");
 
 let vertices = [];
-let sides = [];
 
 main()
 

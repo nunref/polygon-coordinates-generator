@@ -19,5 +19,14 @@ Each vertex connects to the previous.
 Once every vertex is defined, clicking the "Done" button will close the polygon and compile a JSON file with all the information.
 Finally, you can copy or download the JSON and start again with the "Clear" button.
 
+JSON example for a triangle:
+
+```
+{
+ "vertices": "[[528,433],[323,232],[772,242]]",
+ "sides": "[[[528,433],[323,232]],[[323,232],[772,242]],[[772,242],[528,433]]]"
+}
+```
+
 **IMPORTANT**: origin is the botton-left corner.
 

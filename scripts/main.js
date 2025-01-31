@@ -1,48 +1,48 @@
 function draw(event) {
-    point = [event.x - canvas.offsetLeft, event.y - canvas.offsetTop];
+    vertex = [event.x - canvas.offsetLeft, event.y - canvas.offsetTop];
 
     context.beginPath();
-    context.arc( point[0], point[1], 5, 0, Math.PI * 2, 1);
+    context.arc( vertex[0], vertex[1], 5, 0, Math.PI * 2, 1);
     context.fill();
 
-    if (points.length > 0) {
-        previous_point = points[points.length - 1];
+    if (vertices.length > 0) {
+        previous_vertex = vertices[vertices.length - 1];
 
         context.beginPath();
-        context.moveTo(point[0], point[1]);
-        context.lineTo(previous_point[0], previous_point[1]);
+        context.moveTo(vertex[0], vertex[1]);
+        context.lineTo(previous_vertex[0], previous_vertex[1]);
         context.stroke();
 
-        lines.push([[previous_point[0], previous_point[1]], [point[0], point[1]]]);
+        sides.push([[previous_vertex[0], previous_vertex[1]], [vertex[0], vertex[1]]]);
     }
 
-    points.push(point);
+    vertices.push(vertex);
 }
 
 function clearPolygon() {
     context.clearRect(0, 0, canvas.width, canvas.height);
-    points = [];
-    lines = [];
+    vertices = [];
+    sides = [];
     fillPreview();
 }
 
 function closePolygon() {
-        if (points.length > 2) {
-            first_point = points[0];
-            last_point = points[points.length - 1];
+        if (vertices.length > 2) {
+            first_vertex = vertices[0];
+            last_vertex = vertices[vertices.length - 1];
 
             context.beginPath();
-            context.moveTo(first_point[0], first_point[1]);
-            context.lineTo(last_point[0], last_point[1]);
+            context.moveTo(first_vertex[0], first_vertex[1]);
+            context.lineTo(last_vertex[0], last_vertex[1]);
             context.stroke();
 
-            lines.push([[last_point[0], last_point[1]], [first_point[0], first_point[1]]]);
+            sides.push([[last_vertex[0], last_vertex[1]], [first_vertex[0], first_vertex[1]]]);
         }
 }
 
 function generateJSON(preview = false) {
     return JSON.stringify(
-        {points: points, lines: lines}, 
+        {vertices: vertices, sides: sides}, 
         (key, value) => {
             console.log(key, value, typeof value);
             if (value instanceof Array) {
@@ -85,7 +85,7 @@ function downloadJSON() {
     const blobUrl = URL.createObjectURL(blob);
     const anchor = document.createElement('a');
     anchor.href = blobUrl;
-    anchor.download = points.length + "-points-polygon.json";
+    anchor.download = vertices.length + "-vertices-polygon.json";
     anchor.click();
     URL.revokeObjectURL(blobUrl);
 }
@@ -115,8 +115,8 @@ const json_output = document.getElementById("json_output");
 const copy = document.getElementById("copy");
 const download = document.getElementById("download");
 
-let points = [];
-let lines = [];
+let vertices = [];
+let sides = [];
 
 main()
 

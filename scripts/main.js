@@ -36,19 +36,25 @@ function closePolygon() {
 }
 
 function generateJSON(preview = false) {
-    let sides = [];
-    if (points.length > 1) {
-        for (let i = 0; i < points.length - 1; i++) {
-            sides.push([[points[i][0], points[i][1]], [points[i+1][0], points[i+1][1]]]);
+    let vertices = [];
+    if (points.length > 0) {
+        for (let point of points) {
+            vertices.push([point[0], canvas.height - point[1]]);
         }
-        sides.push([[points[points.length - 1][0], points[points.length - 1][1]], [points[0][0], points[0][1]]]);
+    }
+
+    let sides = [];
+    if (vertices.length > 1) {
+        for (let i = 0; i < vertices.length - 1; i++) {
+            sides.push([[vertices[i][0], vertices[i][1]], [vertices[i+1][0], vertices[i+1][1]]]);
+        }
+        sides.push([[vertices[vertices.length - 1][0], vertices[vertices.length - 1][1]], [vertices[0][0], vertices[0][1]]]);
     }
 
 
     return JSON.stringify(
-        {points: points, sides: sides}, 
+        {vertices: vertices, sides: sides}, 
         (key, value) => {
-            console.log(key, value, typeof value);
             if (value instanceof Array) {
                 array_str = "";
                 if (preview && value.length > 2) {

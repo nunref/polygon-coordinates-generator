@@ -7,32 +7,32 @@ function draw(event) {
 
     if (points.length > 0) {
         previous_point = points[points.length - 1];
-
-        context.beginPath();
-        context.moveTo(point[0], point[1]);
-        context.lineTo(previous_point[0], previous_point[1]);
-        context.stroke();
+        drawLine(previous_point, point);
     }
 
     points.push(point);
+}
+
+function drawLine(first_point, second_point) {
+    context.beginPath();
+    context.moveTo(second_point[0], second_point[1]);
+    context.lineTo(first_point[0], first_point[1]);
+    context.stroke();
+}
+
+function donePolygon() {
+    if (points.length > 2) {
+        first_point = points[0];
+        last_point = points[points.length - 1];
+        drawLine(last_point, first_point);
+    }
+    fillPreview();
 }
 
 function clearPolygon() {
     context.clearRect(0, 0, canvas.width, canvas.height);
     points = [];
     fillPreview();
-}
-
-function closePolygon() {
-        if (points.length > 2) {
-            first_point = points[0];
-            last_point = points[points.length - 1];
-
-            context.beginPath();
-            context.moveTo(first_point[0], first_point[1]);
-            context.lineTo(last_point[0], last_point[1]);
-            context.stroke();
-        }
 }
 
 function generateJSON(preview = false) {
@@ -107,10 +107,7 @@ function main() {
     window.addEventListener("load", () => {
         fillPreview()
         canvas.addEventListener("click", draw);
-        done.addEventListener("click", () => {
-            closePolygon();
-            fillPreview();
-        });
+        done.addEventListener("click", donePolygon);
         clear.addEventListener("click", clearPolygon);
         copy.addEventListener("click", saveJSONToClipboard);
         download.addEventListener("click", downloadJSON);
